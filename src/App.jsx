@@ -45,7 +45,7 @@ function App() {
   function handleSearch(){
     console.log(text);
     setData([]);
-    setPage(1);
+    // setPage(1);
     getData();
   }
 
