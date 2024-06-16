@@ -1,13 +1,21 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { createContext,  useEffect, useState } from 'react'
+import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
+
+
+export const imageContext = createContext();
 
 function App() {
   const [page, setPage] = useState(1);
   const[data,setData] = useState([]);
+  const[text,setText] = useState("");
+
+  const navigate = useNavigate();
 
   async function getData(){
-    const response = await fetch(`https://api.unsplash.com/photos/?page=${page}&per_page=20&client_id=XCtYKfKmCVr18RlEzs7cx1LFRcuhFbs7fAWcvkMHwQA`);
+    const response = await fetch(`https://api.unsplash.com/photos/?page=${page}&query=${text}&per_page=10&client_id=XCtYKfKmCVr18RlEzs7cx1LFRcuhFbs7fAWcvkMHwQA`);
     const result = await response.json();
+    // console.log(result);
     setData((prev)=>[...prev,...result]);
   }
 
@@ -29,25 +37,45 @@ function App() {
 
 
   useEffect(()=>{
+     getData();
+     setPage(1);
+     setData([]);
+  },[text])
+
+
+  useEffect(()=>{
     window.addEventListener("scroll",infiniteScroll);
     return () =>window.removeEventListener("scroll",infiniteScroll)
   },[]);
 
+
+  const handleImageClick = (image) => {
+    console.log(image.id)
+    navigate(`/image/${image.id}`);
+  };
+
   return (
+    <>
+  <imageContext.Provider value ={{text,setText}}>
+  <Navbar/>
+  </imageContext.Provider>
+
+   
     <div id="main">
       {
-      data.map((e)=>{
+      data.map((da)=>{
          return (
-          <div id="images"> 
-            <p id="name">{e.user.name}</p>
-            <p id="created">{e.created_at}</p>
-            <img src={e.urls.small}></img>
+          <div id="images" onClick={()=> handleImageClick(da)}> 
+            <p id="name">{da.user.name}</p>
+            <p id="created">{da.created_at}</p>
+            <img src={da.urls.small}></img>
           </div>
          ) 
       })
     }
   
     </div>
+    </>
   )
 }
 
