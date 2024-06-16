@@ -4,15 +4,13 @@ import { imageContext } from './App'
 
 function Navbar() {
 
-  const{text,setText} = useContext(imageContext);
+  const{handleSearch,text,setText} = useContext(imageContext);
   return (
     <div id="navbar">
       <h1>Infinite Scroll</h1>
       <div>
         <input type="text" value={text} onChange={(e)=>setText(e.currentTarget.value)}></input>
-        <button onClick={()=>{
-          console.log(text)
-          setText(text)}}>Search</button>
+        <button onClick={handleSearch}>Search</button>
       </div>
     </div>
   )

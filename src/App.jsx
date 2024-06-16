@@ -13,6 +13,7 @@ function App() {
   const navigate = useNavigate();
 
   async function getData(){
+    // setData([]);
     const response = await fetch(`https://api.unsplash.com/photos/?page=${page}&query=${text}&per_page=10&client_id=XCtYKfKmCVr18RlEzs7cx1LFRcuhFbs7fAWcvkMHwQA`);
     const result = await response.json();
     // console.log(result);
@@ -36,11 +37,17 @@ function App() {
   },[page])
 
 
-  useEffect(()=>{
-     getData();
-     setPage(1);
-     setData([]);
-  },[text])
+  // useEffect(()=>{
+  //    getData();
+  //    setPage(1);
+  // },[text])
+
+  function handleSearch(){
+    console.log(text);
+    setData([]);
+    setPage(1);
+    getData();
+  }
 
 
   useEffect(()=>{
@@ -56,7 +63,7 @@ function App() {
 
   return (
     <>
-  <imageContext.Provider value ={{text,setText}}>
+  <imageContext.Provider value ={{handleSearch,text,setText}}>
   <Navbar/>
   </imageContext.Provider>
 
