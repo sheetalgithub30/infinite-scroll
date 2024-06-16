@@ -12,7 +12,31 @@
 }
 #images{
    margin: 1rem;
+   position: relative;
+   height: 22rem;
+   /* width: 20rem; */
+   border: 1px solid black;
+   border-radius: 40px;
+}
+#images #name{
+    position: absolute;
+    top:1.5rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+     color: wheat;
+    padding: 1rem;
+}
+#images #created{
+    position: absolute;
+    top:4rem;
+    /* font-size: 1rem; */
+    font-weight: 600;
+    color: wheat;
+   padding: 1rem;
 }
 #images img{
     border-radius: 40px;
+     width: 100%;
+     height: 100%;
+
 }
